@@ -25,9 +25,11 @@ class TestEmMinitestSpec < MiniTest::Unit::TestCase
         wait!
       end
 
+      # XXX: Lame, but I couldn't think of another way to ensure the block was
+      # XXX: called
       it "has a manual control helper" do
         wait_for do
-          1+1
+          assert nil
         end
       end
 
@@ -75,7 +77,7 @@ class TestEmMinitestSpec < MiniTest::Unit::TestCase
   end
 
   def test_wait_for
-    assert_passes "has a manual control helper"
+    assert_fails "has a manual control helper"
   end
 
   def test_timeout

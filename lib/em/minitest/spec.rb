@@ -64,6 +64,7 @@ module EM # :nodoc:
       #   end
       def wait_for(wait_time=0.1)
         EM.add_timer(wait_time) do
+          yield
           done!
         end
 
