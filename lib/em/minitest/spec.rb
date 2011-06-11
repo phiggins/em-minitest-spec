@@ -1,22 +1,67 @@
 require 'eventmachine'
 require 'minitest/spec'
 
-module EM
-  module MiniTest
-    module Spec
-      VERSION = '1.0.0'
+module EM # :nodoc:
+  module MiniTest # :nodoc:
+    module Spec # :nodoc
+      VERSION = '1.0.0' # :nodoc:
 
+      ##
+      # +wait+ indicates that the spec is not expected to be completed when
+      # the block is finished running. A call to +done+ is required when using
+      # +wait+.
+      #
+      #   # setup my spec to use EM::MiniTest::Spec
+      #   describe MyClass do
+      #     include EM::MiniTest::Spec
+      #
+      #     # The call to defer will return immediately, so the spec code
+      #     # needs to keep running until callback is called.
+      #     it "does some async things" do
+      #       defer_me = lambda do
+      #         # some async stuff
+      #       end
+      #
+      #       callback = lambda do
+      #         done!
+      #       end
+      #
+      #       EM.defer defer_me, callback
+      #
+      #       wait!
+      #     end
       def wait
         @wait = true
       end
       alias wait! wait
 
+      ##
+      # Indicates that an async spec is finished. See +wait+ for example usage.
       def done
         EM.cancel_timer(@timeout)
         EM.stop
       end
       alias done! done
 
+      ##
+      # A helper method for the use case of waiting for some operation to
+      # complete that is not necessarily under the control of the spec code.
+      #
+      #   # These are exactly equivalent
+      #   it "waits with the helper" do
+      #     wait_for do
+      #       assert true
+      #     end
+      #   end
+      #
+      #   it "waits manually" do
+      #     EM.add_timer(0.1) do
+      #       assert true
+      #       done!
+      #     end
+      #
+      #     wait!
+      #   end
       def wait_for(wait_time=0.1)
         EM.add_timer(wait_time) do
           done!
@@ -25,12 +70,12 @@ module EM
         wait!
       end
 
-      def self.included base
+      def self.included base # :nodoc:
         base.extend(ClassMethods)
       end
 
-      module ClassMethods
-        def it *args, &block
+      module ClassMethods # :nodoc:
+        def it *args, &block # :nodoc:
           return super unless block_given?
 
           super do
