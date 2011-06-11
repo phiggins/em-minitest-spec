@@ -3,6 +3,8 @@
 require 'rubygems'
 require 'hoe'
 
+Hoe.plugin :git
+
 Hoe.spec 'em_minitest_spec' do
   developer('pete higgins', 'pete@peterhiggins.org')
 
