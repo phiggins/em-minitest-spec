@@ -55,15 +55,15 @@ module EM # :nodoc:
       #   end
       #
       #   it "waits manually" do
-      #     EM.add_timer(0.1) do
+      #     EM.next_tick do
       #       assert true
       #       done!
       #     end
       #
       #     wait!
       #   end
-      def wait_for(wait_time=0.1)
-        EM.add_timer(wait_time) do
+      def wait_for
+        EM.next_tick do
           yield
           done!
         end
@@ -83,7 +83,7 @@ module EM # :nodoc:
             @wait = false
 
             EM.run do
-              @timeout = EM.add_timer(0.5) do
+              @timeout = EM.add_timer(0.1) do
                 flunk "test timed out!"
               end
 

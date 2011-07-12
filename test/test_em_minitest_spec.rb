@@ -18,19 +18,19 @@ class TestEmMinitestSpec < MiniTest::Unit::TestCase
       it "allows pending specs"
 
       it "allows manual reactor control" do
-        EM.add_timer(0.1) do
+        EM.next_tick do
           done!
         end
 
         wait!
       end
 
-      # XXX: Lame, but I couldn't think of another way to ensure the block was
-      # XXX: called
       it "has a manual control helper" do
         wait_for do
-          assert nil
+          pass
         end
+
+        EM.add_timer(0.1) { flunk }
       end
 
       it "flunks long running specs" do
@@ -77,7 +77,7 @@ class TestEmMinitestSpec < MiniTest::Unit::TestCase
   end
 
   def test_wait_for
-    assert_fails "has a manual control helper"
+    assert_passes "has a manual control helper"
   end
 
   def test_timeout
