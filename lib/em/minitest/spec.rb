@@ -4,7 +4,7 @@ require 'minitest/spec'
 module EM # :nodoc:
   module MiniTest # :nodoc:
     module Spec # :nodoc
-      VERSION = '1.0.0' # :nodoc:
+      VERSION = '1.1.0' # :nodoc:
 
       ##
       # +wait+ indicates that the spec is not expected to be completed when
