@@ -5,7 +5,7 @@ require 'hoe'
 
 Hoe.plugin :git
 
-Hoe.spec 'em_minitest_spec' do
+Hoe.spec 'em-minitest-spec' do
   developer('pete higgins', 'pete@peterhiggins.org')
 
   extra_deps << ["eventmachine"]
