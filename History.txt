@@ -1,3 +1,17 @@
+=== 1.1.1 / 2011-07-12
+
+* 1 minor enhancement
+
+  * Define timeout_interval method so library users can define their own
+    timeout length.
+
+=== 1.1.0 / 2011-07-11
+
+* 2 minor enhancements
+
+  * Fix gem name from 'em_minitest_spec' to 'em-minitest-spec'.
+  * Change calls of EM.add_timer(0.1) to EM.next_tick.
+
 === 1.0.0 / 2011-06-11
 
 * 1 major enhancement
