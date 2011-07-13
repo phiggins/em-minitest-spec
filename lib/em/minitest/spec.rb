@@ -4,7 +4,7 @@ require 'minitest/spec'
 module EM # :nodoc:
   module MiniTest # :nodoc:
     module Spec # :nodoc
-      VERSION = '1.1.0' # :nodoc:
+      VERSION = '1.1.1' # :nodoc:
 
       ##
       # +wait+ indicates that the spec is not expected to be completed when
@@ -71,6 +71,13 @@ module EM # :nodoc:
         wait!
       end
 
+      ##
+      # The amount of time to wait for a test to finish before raising an
+      # exception. Override this in your class to allow tests more time to run.
+      def timeout_interval
+        0.1
+      end
+
       def self.included base # :nodoc:
         base.extend(ClassMethods)
       end
@@ -83,7 +90,7 @@ module EM # :nodoc:
             @wait = false
 
             EM.run do
-              @timeout = EM.add_timer(0.1) do
+              @timeout = EM.add_timer(timeout_interval) do
                 flunk "test timed out!"
               end
 
